@@ -1,0 +1,58 @@
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    padding:0px;
+    margin:0px;
+}
+
+.menu{
+    border: 1px solid;
+    height: 40px;
+    
+    background: white;
+
+}
+.menu-options{
+    border: 1px solid;
+    height: 60px;
+    background: white;
+
+
+}
+.formula-input{
+    border: 1px solid;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    background: white;
+}
+
+
+.cells{
+    height: calc(100vh - 170px);
+    border: 1px solid;
+    background: lightgray;
+    overflow: auto;
+}
+.row
+{
+    display: flex;
+
+}
+.cell{
+    min-width: 58px;
+    border: 1px solid;
+    min-height: 24px;
+
+}
+.sheets{
+
+    border: 1px solid;
+    height: 30px;
+    background: white;
+}
+
+    
