@@ -2,6 +2,7 @@
 // creat json file using npm init -y
 // npm install electron
 //add in package.json "start":"electron ."
+//
 
 
 const electron =require("electron");
