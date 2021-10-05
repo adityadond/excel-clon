@@ -54,7 +54,7 @@ $(document).ready(function () {
             let value=eval(formula);
             return value;
         }
-
+        // this function gives us rowid and colid
         function getids(fcomp)
         {
             let colid=fcomp.charCodeAt(0)-65;
