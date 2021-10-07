@@ -26,6 +26,8 @@ $(document).ready(function () {
         let cellobject=db[rowid][colid];
         if(cellobject.formula!=formula)
         {
+            // this will help in 4th case in which if we change formula then we have to call removeformula function.
+            removeformula(cellobject);
             let value=solvef(formula,cellobject);
             cellobject.value=value+"";
             cellobject.formula=formula;
