@@ -45,13 +45,17 @@ $(document).ready(function () {
                 if(cellname>='A' && cellname<='Z')
                 {
                     let {rowid, colid}=getids(fcomp);
-                    
                     let parentcellobject=  db[rowid][colid];
-                    // add self into children into parentcellobject
-                    addCtoPO(parentcellobject,cellobject);
-
-                    //add parent into childobject
-                    addPtoCO(fcomp,cellobject);
+                    if(cellobject)
+                    {
+                       
+                        // add self into children into parentcellobject
+                        addCtoPO(parentcellobject,cellobject);
+    
+                        //add parent into childobject
+                        addPtoCO(fcomp,cellobject);
+                    }
+                    
                     
                     let value=parentcellobject.value;
                     formula=formula.replace(fcomp, value);
@@ -89,10 +93,31 @@ $(".cell").on("blur",function(){
    if(cellobject.value!=val)
    {
     cellobject.value=val;
+    //this will update childs when we change its parents
+    updatechild(cellobject);
    }
 })
+function updatechild(cellobject)
+{
+for(let i=0;i<cellobject.childs.length;i++)
+{
+    let child=cellobject.childs[i];
+    let {rowid,colid}=getids(child);
+    let childobject=db[rowid][colid];
+    let value=solvef(childobject.formula);
+    //db update
+    childobject.value=value+"";
+    //Ui update
+    $(`.cell[rid=${rowid}][cid=${colid}]`).text(value);
+    // if childobject having its own child then we have call function again ,here we use for loop so no need of base case.
+    updatechild(childobject);
 
-   // this will create a DB for store cell data;
+}
+
+
+}
+
+// this will create a DB for store cell data;
    function init()
    {
    db=[];
