@@ -30,7 +30,7 @@ $(document).ready(function () {
             cellobject.value=value+"";
             cellobject.formula=formula;
             // this will add case of value->formula
-            updatechild(cellobject);
+           updatechild(cellobject);
             //UI update
             $(lsc).text(value);
         }
@@ -95,10 +95,30 @@ $(".cell").on("blur",function(){
    if(cellobject.value!=val)
    {
     cellobject.value=val;
+    //this will 
+    if(cellobject.formula)
+    {
+        removeformula(cellobject);
+    }
     //this will update childs when we change its parents
     updatechild(cellobject);
    }
 })
+function removeformula(cellobject)
+{
+    cellobject.formula="";
+    for(let i=0;i<cellobject.parents.length;i++)
+    {
+        let parentname=cellobject.parents[i];
+        let {rowid, colid}=getids(parentname);
+        let parentcellobject=db[rowid][colid];
+        let filterdta=parentcellobject.childs.filter(function(child){
+            return cellobject.name!=child;
+        })
+        parentcellobject.childs=filterdta;
+    }
+    cellobject.parents=[];
+}
 function updatechild(cellobject)
 {
 for(let i=0;i<cellobject.childs.length;i++)
