@@ -26,7 +26,7 @@ $(document).ready(function () {
         let cellobject=db[rowid][colid];
         if(cellobject.formula!=formula)
         {
-            let value=solvef(formula);
+            let value=solvef(formula,cellobject);
             cellobject.value=value+"";
             cellobject.formula=formula;
             //UI update
@@ -35,7 +35,7 @@ $(document).ready(function () {
       
         })
 
-        function solvef(formula)
+        function solvef(formula, cellobject)
         {
             let fcmps=formula.split(" ");
             for(let i=0;i<fcmps.length;i++)
@@ -46,13 +46,28 @@ $(document).ready(function () {
                 {
                     let {rowid, colid}=getids(fcomp);
                     
-                    let cellobject=  db[rowid][colid];
-                    let value=cellobject.value;
+                    let parentcellobject=  db[rowid][colid];
+                    // add self into children into parentcellobject
+                    addCtoPO(parentcellobject,cellobject);
+
+                    //add parent into childobject
+                    addPtoCO(fcomp,cellobject);
+                    
+                    let value=parentcellobject.value;
                     formula=formula.replace(fcomp, value);
                 }
             }
             let value=eval(formula);
             return value;
+        }
+
+        function addCtoPO(parentcellobject,cellobject)
+        {
+            parentcellobject.childs.push(cellobject.name);
+        }
+        function addPtoCO(fcomp,cellobject)
+        {
+            cellobject.parents.push(fcomp);
         }
 // this fuction gives value for dataase .
         function getids(fcomp)
@@ -90,7 +105,9 @@ $(".cell").on("blur",function(){
                cellobject={
                    name:cellad,
                    value:"",
-                   formula:""
+                   formula:"",
+                   parents:[],
+                   childs:[]
                        }
            row.push(cellobject);
        }
