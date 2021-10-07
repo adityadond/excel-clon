@@ -29,6 +29,8 @@ $(document).ready(function () {
             let value=solvef(formula,cellobject);
             cellobject.value=value+"";
             cellobject.formula=formula;
+            // this will add case of value->formula
+            updatechild(cellobject);
             //UI update
             $(lsc).text(value);
         }
