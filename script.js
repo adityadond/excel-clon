@@ -4,6 +4,27 @@
  let lsc;
 
 $(document).ready(function () {
+
+    $(".content").on("scroll", function(){
+        let l=$(this).scrollLeft();
+        let t=$(this).scrollTop();
+        $(".top-row").css("top",t+"px");
+        $(".top-left-cell").css("top",t+"px");
+
+        $(".left-col").css("left", l+"px");
+        $(".top-left-cell").css("left", l+"px");
+    })
+
+    $(".cell").on("keyup",function(){
+       let h= $(this).height();
+       let rowid=$(this).attr("rid");
+       $(`.left-col-cell[cellid=${rowid}]`).height(h);
+    })
+
+
+
+
+
    $(".cell").on("click",function(){
        
        let rowid=Number($(this).attr("rid"));

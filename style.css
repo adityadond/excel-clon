@@ -37,11 +37,14 @@ html,body{
     overflow: auto;
     position: relative;
 }
-.top-left-row
+.top-left-cell
 {
     background: white;
     height: 24px;
     width: 30px;
+    position: absolute;
+    top:0px;
+    z-index: 3;
 }
 .top-row{
     
@@ -49,19 +52,24 @@ html,body{
     position: absolute;
     top: 0px;
     left: 30px;
+    z-index: 2;
 }
 .top-row-cell
 {
     
-    height: 24px;
-    min-width: 58px;
-    border: solid 1px;
     text-align: center;
     background: white;
+    min-width: 58px;
+    border: 1px solid;
+    min-height: 24px;
+  
+
 }
 .left-col
 {
-
+position: absolute;
+top:24px;
+z-index: 2;
 }
 .left-col-cell
 {
@@ -70,6 +78,10 @@ html,body{
     width: 30px;
     border: solid 1px;
     background: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
 }
 .cells{
     position: absolute;
@@ -86,6 +98,8 @@ html,body{
     min-width: 58px;
     border: 1px solid;
     min-height: 24px;
+    max-width: 58px;
+    
 
 }
 .sheets{
