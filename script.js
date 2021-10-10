@@ -1,5 +1,7 @@
 
  const $ = require("jquery");
+let fs =require("fs");
+ const dialog=require("electron").remote.dialog;
  let db;
  let lsc;
 
@@ -13,6 +15,73 @@ $(document).ready(function () {
 
         $(".left-col").css("left", l+"px");
         $(".top-left-cell").css("left", l+"px");
+    })
+
+    $(".new").on("click",function(){
+        
+        db=[];
+        for(let i=0;i<100;i++)
+        {
+            row=[];
+            for(let j=0;j<26;j++)
+            {
+                let cellad=String.fromCharCode(65+j)+(i+1);
+                    cellobject={
+                        name:cellad,
+                        value:"",
+                        formula:"",
+                        parents:[],
+                        childs:[]
+                            }
+                row.push(cellobject);
+                $(`.cell[rid=${i} ][cid=${j}]`).text("");
+            }
+            db.push(row);
+        }
+    })
+    $(".open").on("click",function(){
+        let filepath=dialog.showSaveDialogSync();
+        if(filepath)
+        {
+            let data=fs.readFileSync(filepath);
+        let newdata=JSON.parse(data);
+        db=newdata;
+        for(let i=0;i<100;i++)
+        {
+            for(let j=0;j<26;j++)
+            {
+                let cellobject=db[i][j];
+                $(`.cell[rid=${i} ][cid=${j}]`).text(cellobject.value);
+            }
+        }
+        
+        }
+        
+    })
+    $(".save").on("click",function(){
+        let data=JSON.stringify(db);
+        let path=dialog.showSaveDialogSync();
+        if(path)
+        {
+            fs.writeFileSync(path,data);
+        }
+       
+       
+    })
+
+    $(".File").on("click",function(){
+        $(".file-menu-option").addClass("active");
+        $(".Home-menu-option").removeClass("active");
+        $(".File").addClass("active-menu");
+        $(".Home").removeClass("active-menu");
+
+    })
+    $(".Home").on("click",function(){
+        $(".file-menu-option").removeClass("active");
+        $(".Home-menu-option").addClass("active");
+        $(".Home").addClass("active-menu");
+        $(".File").removeClass("active-menu");
+
     })
 
     $(".cell").on("keyup",function(){
@@ -180,6 +249,7 @@ for(let i=0;i<cellobject.childs.length;i++)
                    childs:[]
                        }
            row.push(cellobject);
+          
        }
        db.push(row);
    }

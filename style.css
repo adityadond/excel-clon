@@ -11,17 +11,51 @@ html,body{
 .menu{
     border: 1px solid;
     height: 40px;
-    
     background: white;
+    display: flex;
+    align-items: center;
+
+}
+.menu div{
+    margin-left: 10px;
+}
+.File{
+    
+
+}
+.Home{
 
 }
 .menu-options{
     border: 1px solid;
     height: 60px;
     background: white;
-
-
+    display: flex;
+    align-items: center;
 }
+.menu-options div{
+    margin-left: 10px;
+}
+.file-menu-option
+{
+display: none;
+}
+.Home-menu-option
+{
+display: none;
+}
+.active{
+    display: flex;
+}
+.active-menu{
+    background-color: gray;
+    /* text-decoration-color: red; */
+    border: solid 1px;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+
 .formula-input{
     border: 1px solid;
     height: 40px;
