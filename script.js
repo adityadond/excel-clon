@@ -2,7 +2,8 @@
  const $ = require("jquery");
 let fs =require("fs");
  const dialog=require("electron").remote.dialog;
- let db;
+ let sheetDB=[];
+ let db;// current DB
  let lsc;
 
 $(document).ready(function () {
@@ -16,10 +17,31 @@ $(document).ready(function () {
         $(".left-col").css("left", l+"px");
         $(".top-left-cell").css("left", l+"px");
     })
+     
+    $(".add-sheet").on("click", function(){
+        //remove active sheet-class from exting
+        $(".sheet-list .sheet.active-sheet").removeClass("active-sheet");
+        //append new div with active-sheet class to sheet-list
+        let sheet=`<div class="sheet active-sheet" sid=${sheetDB.length}>sheet ${sheetDB.length+1}</div>`;
+        $(".sheet-list").append(sheet);
+        //new db add into sheetDB.
+        init();
+        //update UI
+        $("#address").val("");
+        for(let i=0;i<100;i++)
+        {
+            for(let j=0;j<26;j++)
+            {
+                $(`.cell[rid=${i} ][cid=${j}]`).text("");
+            }
+        }
+    })
+
 
     $(".new").on("click",function(){
         
         db=[];
+        $("#address").val("");
         for(let i=0;i<100;i++)
         {
             row=[];
@@ -66,7 +88,6 @@ $(document).ready(function () {
             fs.writeFileSync(path,data);
         }
        
-       
     })
 
     $(".File").on("click",function(){
@@ -89,10 +110,6 @@ $(document).ready(function () {
        let rowid=$(this).attr("rid");
        $(`.left-col-cell[cellid=${rowid}]`).height(h);
     })
-
-
-
-
 
    $(".cell").on("click",function(){
        
@@ -234,7 +251,7 @@ for(let i=0;i<cellobject.childs.length;i++)
 // this will create a DB for store cell data;
    function init()
    {
-   db=[];
+   newdb=[];
    for(let i=0;i<100;i++)
    {
        row=[];
@@ -251,9 +268,11 @@ for(let i=0;i<cellobject.childs.length;i++)
            row.push(cellobject);
           
        }
-       db.push(row);
+       newdb.push(row);
    }
-   console.log(db);
+   db=newdb;
+  sheetDB.push(db);
+   console.log(sheetDB);
    }
    init();
 })
