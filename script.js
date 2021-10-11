@@ -24,6 +24,29 @@ $(document).ready(function () {
         //append new div with active-sheet class to sheet-list
         let sheet=`<div class="sheet active-sheet" sid=${sheetDB.length}>sheet ${sheetDB.length+1}</div>`;
         $(".sheet-list").append(sheet);
+        //add event after add sheet due in event not add in bellow
+
+        $(".sheet").on("click",function(){
+            
+            let hasclass=$(this).hasClass("active-sheet");
+        if(!hasclass)
+            {
+               $(".sheet.active-sheet").removeClass("active-sheet");
+               $(this).addClass("active-sheet");
+               let sheetID=Number($(this).attr("sid"));
+               db=sheetDB[sheetID];
+               for(let i=0;i<100;i++)
+               {
+                   for(let j=0;j<26;j++)
+                   {
+                       let cellobject=db[i][j];
+                       $(`.cell[rid=${i} ][cid=${j}]`).text(cellobject.value);
+                   }
+               }
+            }
+            
+        })
+
         //new db add into sheetDB.
         init();
         //update UI
@@ -36,7 +59,24 @@ $(document).ready(function () {
             }
         }
     })
-
+    $(".sheet.active-class").on("click",function(){
+        let hasclass=$(this).hasClass("active-sheet");
+        if(!hasclass)
+            {
+               $(".sheet.active-sheet").removeClass("active-sheet");
+               $(this).addClass("active-sheet");
+               let sheetID=Number($(this).attr("sid"));
+               db=sheetDB[sheetID];
+               for(let i=0;i<100;i++)
+               {
+                   for(let j=0;j<26;j++)
+                   {
+                       let cellobject=db[i][j];
+                       $(`.cell[rid=${i} ][cid=${j}]`).text(cellobject.value);
+                   }
+               }
+            }
+    })
 
     $(".new").on("click",function(){
         
