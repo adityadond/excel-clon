@@ -17,7 +17,76 @@ $(document).ready(function () {
         $(".left-col").css("left", l+"px");
         $(".top-left-cell").css("left", l+"px");
     })
-     
+
+     $("#bold").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("font-weight", cellobject.bold ? "normal" :"bold");
+        cellobject.bold= !cellobject.bold;
+
+     })
+     $("#underline").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("text-decoration", cellobject.underline ? "none" :"underline");
+        cellobject.underline= !cellobject.underline;
+
+    })
+    $("#italic").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("font-style", cellobject.italic ? "normal" :"italic");
+        cellobject.italic= !cellobject.italic;
+
+    })
+   function getcellobject(lsc){
+    let rowid=Number($(lsc).attr("rid"));
+    let colid=Number($(lsc).attr("cid"));
+    let cellobject =db[rowid][colid];
+    return cellobject;
+    }
+
+    $("#left").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("text-align", "left");
+        cellobject.textAlign.left= !cellobject.textAlign.left;
+    })
+    $("#center").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("text-align", "center");
+        cellobject.textAlign.center= !cellobject.textAlign.center;
+    })
+    $("#right").on("click",function(){
+        let cellobject=getcellobject(lsc);
+        $(lsc).css("text-align", "right");
+        cellobject.textAlign.right= !cellobject.textAlign.right;
+    })
+
+    $("#font-size").on("change",function(){
+        let cellobject=getcellobject(lsc);
+       let size= Number($(this).val());
+       $(lsc).css("font-size", size);
+       cellobject.fontSize= size;
+        
+    })
+    $('#cell-font').on('input',function() {
+        let cellobject=getcellobject(lsc);
+        let c=$(this).val();
+        $(lsc).css("color", c);
+        cellobject.textColor=c; 
+    })
+    $('#cell-backround').on('input',function() {
+        let cellobject=getcellobject(lsc);
+        let c=$(this).val();
+        $(lsc).css("background-color", c);
+        cellobject.CellBC=c; 
+    })
+    $("#font-select").on("change",function(){
+        let cellobject=getcellobject(lsc);
+       let fonttpe= $(this).val();
+       $(lsc).css("font-family", fonttpe);
+       cellobject.fontType= fonttpe;
+        
+    })
+
+
     $(".add-sheet").on("click", function(){
         //remove active sheet-class from exting
         $(".sheet-list .sheet.active-sheet").removeClass("active-sheet");
@@ -303,7 +372,15 @@ for(let i=0;i<cellobject.childs.length;i++)
                    value:"",
                    formula:"",
                    parents:[],
-                   childs:[]
+                   childs:[],
+                   bold:false,
+                   underline:false,
+                   italic:false,
+                   textAlign:{left:true,center:false,right:false},
+                   fontSize:16,
+                   textColor:"",
+                   CellBC:"white",
+                   fontType:""
                        }
            row.push(cellobject);
           
